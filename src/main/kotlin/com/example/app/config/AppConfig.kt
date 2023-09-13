@@ -2,6 +2,7 @@ package com.example.app.config
 
 import com.example.app.exception.Always200
 import com.example.app.exception.ServerResultProducer
+import com.example.app.exception.TraditionalHttp
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.web.server.ErrorPage
@@ -35,8 +36,12 @@ class BeanFactory{
 
     @Bean
     fun serverResultProducer(): ServerResultProducer {
-        println(customProperties.mode)
-        return Always200()
+        if(customProperties.mode == "traditionalHttp") {
+            return TraditionalHttp()
+        } else if(customProperties.mode == "always200") {
+            return Always200()
+        }
+        throw IllegalArgumentException("Unknown response mode")
     }
 }
 

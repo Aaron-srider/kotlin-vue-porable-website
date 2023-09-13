@@ -3,6 +3,7 @@
 **/.idea
 **/.mvn
 
+*.mv.db
 
 HELP.md
 target/

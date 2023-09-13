@@ -16,10 +16,19 @@ fun main(args: Array<String>) {
 @Component
 class TestRunner: CommandLineRunner {
 
+
 	private val log = KotlinLogging.logger {}
 
 	override fun run(vararg args: String?) {
-		log.info { "write some here" }
+		// var i = 10;
+		// for (i1 in 0..i) {
+		// 	userDao.save(UserPO(
+		// 		id = null,
+		// 		username = "test${i1}",
+		// 		password = "test"
+		// 	))
+		// }
+		// println(userDao.list())
 	}
 
 }

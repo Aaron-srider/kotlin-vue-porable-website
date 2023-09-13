@@ -1,8 +1,57 @@
+datasource-username: root
+datasource-password: wc123456
 
 spring:
   servlet:
     multipart:
       max-file-size: 100MB
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:h2:./h2db;MODE=MYSQL;TRACE_LEVEL_FILE=0;TRACE_LEVEL_SYSTEM_OUT=0
+    driver-class-name: org.h2.Driver
+    username: ${datasource-username}
+    password: ${datasource-password}
+  sql:
+    init:
+      schema-locations: classpath:sql/schema.sql
+      mode: always
 
 response:
-  mode: test
+  mode: traditionalHttp
+
+
+logging:
+  level:
+    root: debug
+    reactor:
+      netty: info
+    javax.management.remote.rmi: info
+    _org.springframework.web.servlet.HandlerMapping.Mappings: off
+    net.sf.ehcache: info
+    io.netty: info
+    io.netty.handler.logging.LoggingHandler: debug
+    org.apache: info
+    org.hibernate: info
+    com.alibaba.druid.pool.PreparedStatementPool: info
+    org.springframework.orm.jpa.JpaTransactionManager: info
+    com.zaxxer.hikari: info
+    sun.rmi: info
+    org:
+      mybatis:
+        spring:
+          mapper:
+            ClassPathMapperScanner: info
+      hibernate:
+        validator:
+          internal:
+            engine: info
+      springframework: info
+      springframework.context.support.PostProcessorRegistrationDelegate: warn
+
+mybatis-plus:
+  global-config:
+    banner: off
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
