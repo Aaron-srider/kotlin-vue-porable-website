@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import java.io.Serializable
 import java.math.BigDecimal
+import javax.validation.Valid
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotEmpty
@@ -40,7 +41,7 @@ class UserController {
     @PostMapping("/users/{userId}/records")
     fun addRecord(
         @PathVariable userId: Int,
-        @RequestBody recordDto: RecordDto
+        @RequestBody @Valid recordDto: RecordDto
     ) {
         userDao.addRecord(userId, recordDto.amount!!)
     }
@@ -59,7 +60,7 @@ class UserController {
     fun updateRecord(
         @PathVariable userId: Int,
         @PathVariable recordId: Int,
-        @RequestBody recordDto: RecordDto
+        @RequestBody @Valid recordDto: RecordDto
     ) {
         userDao.updateRecord(userId, recordId, recordDto.amount!!)
     }

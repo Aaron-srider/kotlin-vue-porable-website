@@ -1,24 +1,30 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import HelloWorld from '@/views/HelloWorld.vue';
-import About from '@/views/About.vue';
+import MainFrameView from "@/views/index.vue";
+import IndexView from "@/views/user/index.vue";
+import RecordView from "@/views/user/record.vue";
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
     {
         path: '/',
-        redirect: '/hello-world',
+        redirect: '/index',
     },
     {
-        path: '/hello-world',
-        name: 'HelloWorld',
-        component: HelloWorld,
+        path: '/index',
+        component: MainFrameView,
+        children: [
+            {
+                path: '',
+                component: IndexView,
+            },
+            {
+                path: 'record',
+                component: RecordView,
+            }
+        ]
     },
-    {
-        path: '/about',
-        name: 'About',
-        component: About,
-    },
+
 ];
 
 const router = new VueRouter({

@@ -63,6 +63,12 @@ class Client {
         });
     }
     // endregion
+    static getUsers() {
+        return request({
+            url: `/users`,
+            method: 'get',
+        });
+    }
 }
 
 export default Client;
