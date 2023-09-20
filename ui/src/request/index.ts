@@ -8,11 +8,8 @@
  * 3. Add response interceptor to handle some global response codes
  */
 import axios from 'axios';
-import { Message } from 'element-ui';
-import { PageLocation } from '@/ts/dynamicLocation';
-import globalHandledRespCodes, {
-    SUCCESS,
-} from '@/ts/GlobalHandledResponseCode';
+import {PageLocation} from '@/ts/dynamicLocation';
+import {Notification} from 'element-ui'
 
 // create an axios instance
 const service = axios.create({
@@ -48,45 +45,30 @@ service.interceptors.response.use(
      * You can also judge the status by HTTP Status Code
      */
     (response) => {
-        /**
-         * {
-         *      code: "",
-         *      data: {},
-         *      msg: ""
-         * }
-         */
-        const res = response.data;
+        // log only
         let relativeUrl = response.config.url!.substring(
             response.config.baseURL!.length,
         );
         let logtag = `Network Response: <==== ${relativeUrl}\n`;
-        console.log(logtag, res);
-        let code = res.code;
+        console.log(logtag, response);
 
-        // success
-        if (code === SUCCESS) {
-            return res;
-        }
-
-        // if blob, return the blob to specific request "then" handler for downloading
-        if (res.code == undefined) {
-            return response;
-        }
-
-        // handle global error
-        globalHandledRespCodes.handle(code);
-
-        // give a chance to handle error by specific request "then" handler
-        return Promise.reject(res);
+        return Promise.resolve(response);
     },
     (error) => {
-        // 统一处理网络错误
-        Message({
-            message: `无法连接服务器(${error.message})`,
-            type: 'error',
-            duration: 2 * 1000,
-        });
-        return Promise.reject();
+        let response = error.response;
+        if (response == null) {
+            // if the target is not reachable, the response will be null
+            // this is comprehensible, the request is not reaching the server, thus the response should
+            // be not present.
+            Notification.error('Server unreachable');
+            return Promise.reject();
+        }
+
+        // when code comes here, means the status is not 200
+        let status = response.status;
+        let responseBody = response.data;
+        Notification.error(`${status}: ${responseBody}`);
+        return Promise.reject(response);
     },
 );
 
