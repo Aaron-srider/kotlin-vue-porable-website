@@ -8,7 +8,7 @@
         <version>2.7.0</version>
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>kotlin-jdk1_8-springboot_2_7_0</artifactId>
+    <artifactId>kotlin-jdk11-springboot_2_7_vue2_ts_website</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
@@ -85,6 +85,7 @@
     </dependencies>
 
     <build>
+        <finalName>server</finalName>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
         <plugins>
